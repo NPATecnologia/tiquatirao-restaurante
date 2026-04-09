@@ -1,26 +1,178 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Tiquatirão Mar & Brasa — extracted from logo */
+  --color-background: #0C0A08;
+  --color-foreground: #F2EDE8;
+  --color-surface: #110E0B;
+  --color-surface-light: #181410;
+  --color-surface-elevated: #1E1A15;
+  --color-border: #201C17;
+  --color-border-accent: rgba(232, 130, 42, 0.15);
+
+  /* Mar (ocean) */
+  --color-ocean: #1A4B7C;
+  --color-ocean-light: #2668A8;
+  --color-ocean-dark: #0F3458;
+
+  /* Brasa (fire/lobster orange) */
+  --color-brasa: #E8822A;
+  --color-brasa-light: #F0A050;
+  --color-brasa-dark: #C06A1A;
+
+  --color-gunmetal: #2C2821;
+  --color-silver: #C0BAB2;
+  --color-muted: #8A8278;
+  --color-muted-dark: #524D46;
+
+  --font-sans: var(--font-outfit);
+  --font-display: var(--font-playfair);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.font-display {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-feature-settings: "ss01", "liga";
+}
+
+/* ---- Selection ---- */
+::selection {
+  background-color: rgba(232, 130, 42, 0.25);
+  color: var(--color-foreground);
+}
+
+/* ---- Focus ring ---- */
+:focus-visible {
+  outline: 2px solid var(--color-brasa);
+  outline-offset: 3px;
+}
+
+/* ---- Film grain — luxury texture ---- */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ---- CTA shimmer sweep ---- */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  animation: shimmer-sweep 4.5s ease-in-out infinite;
+}
+
+@keyframes shimmer-sweep {
+  0%, 100% { transform: translateX(-100%); }
+  45%, 55% { transform: translateX(100%); }
+}
+
+/* ---- Brasa text gradient ---- */
+.text-brasa-gradient {
+  background: linear-gradient(135deg, #C06A1A 0%, #E8822A 30%, #F0A050 50%, #E8822A 70%, #C06A1A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---- Marquee — 3-strip GPU technique ---- */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll linear infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.marquee-strip {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-33.3333%, 0, 0); }
+}
+
+/* ---- Light sweep ---- */
+@keyframes light-sweep {
+  0% { transform: translateX(-100%) skewX(-12deg); }
+  100% { transform: translateX(400%) skewX(-12deg); }
+}
+
+/* ---- Gradient breathe ---- */
+@keyframes gradient-breathe {
+  0%, 100% {
+    background-position: 0% 50%;
+    opacity: 0.4;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 0.7;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---- Nav underline expand ---- */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: var(--color-brasa);
+  transition: width 0.3s ease, left 0.3s ease;
+}
+.nav-link:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+/* ---- Mobile CTA pulse ring ---- */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.4; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* ---- Drawer entrance ---- */
+@keyframes drawer-fade-in {
+  from { opacity: 0; transform: translate3d(0, -4px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* ---- Reduced Motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
