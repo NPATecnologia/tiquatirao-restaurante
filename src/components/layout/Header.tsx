@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { SITE, NAV_LINKS } from "@/lib/constants";
@@ -8,6 +8,9 @@ import { SITE, NAV_LINKS } from "@/lib/constants";
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const mobileCloseRef = useRef<HTMLButtonElement>(null);
+  const mobileOverlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function onScroll() {
@@ -39,6 +42,38 @@ export function Header() {
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
+  }, [mobileOpen]);
+
+  // Focus management for mobile menu
+  useEffect(() => {
+    if (mobileOpen) {
+      requestAnimationFrame(() => mobileCloseRef.current?.focus());
+    } else {
+      hamburgerRef.current?.focus();
+    }
+  }, [mobileOpen]);
+
+  // Tab trap for mobile menu
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    function handleTabTrap(e: KeyboardEvent) {
+      if (e.key !== "Tab") return;
+      const overlay = mobileOverlayRef.current;
+      if (!overlay) return;
+      const focusable = overlay.querySelectorAll<HTMLElement>('a[href], button, [tabindex]:not([tabindex="-1"])');
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    }
+
+    window.addEventListener("keydown", handleTabTrap);
+    return () => window.removeEventListener("keydown", handleTabTrap);
   }, [mobileOpen]);
 
   const closeMobile = useCallback(() => setMobileOpen(false), []);
@@ -97,6 +132,7 @@ export function Header() {
 
             {/* Mobile hamburger */}
             <button
+              ref={hamburgerRef}
               type="button"
               onClick={() => setMobileOpen(true)}
               aria-label="Abrir menu"
@@ -126,6 +162,7 @@ export function Header() {
       {/* Mobile menu overlay */}
       {mobileOpen && (
         <div
+          ref={mobileOverlayRef}
           className="fixed inset-0 z-50 flex flex-col bg-background/98 backdrop-blur-xl md:hidden"
           role="dialog"
           aria-modal="true"
@@ -142,6 +179,7 @@ export function Header() {
               className="h-12 w-auto"
             />
             <button
+              ref={mobileCloseRef}
               type="button"
               onClick={closeMobile}
               aria-label="Fechar menu"

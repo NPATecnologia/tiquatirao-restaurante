@@ -111,7 +111,7 @@ export function Location() {
         {/* Info column */}
         <div>
           <span className="mb-4 inline-block text-sm font-medium uppercase tracking-[0.3em] text-brasa">
-            Localizacao
+            Localização
           </span>
 
           <h2 className="font-display mb-8 text-4xl leading-tight text-foreground lg:text-5xl">
@@ -152,10 +152,11 @@ export function Location() {
         <div className="overflow-hidden rounded-lg border border-border">
           <iframe
             src={SITE.mapsEmbed}
-            title={`Localizacao do ${SITE.name} no Google Maps`}
+            title={`Localização do ${SITE.name} no Google Maps`}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             allowFullScreen
+            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
             className="aspect-video w-full lg:aspect-auto lg:h-full lg:min-h-[400px]"
             style={{ border: 0 }}
           />

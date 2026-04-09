@@ -34,19 +34,24 @@
   font-feature-settings: "ss01", "liga";
 }
 
-/* ---- Selection ---- */
+/* ================================================================
+   SELECTION & FOCUS
+   ================================================================ */
+
 ::selection {
   background-color: rgba(232, 130, 42, 0.25);
   color: var(--color-foreground);
 }
 
-/* ---- Focus ring ---- */
 :focus-visible {
   outline: 2px solid var(--color-brasa);
   outline-offset: 3px;
 }
 
-/* ---- Film grain — luxury texture ---- */
+/* ================================================================
+   FILM GRAIN — luxury texture
+   ================================================================ */
+
 body::after {
   content: "";
   position: fixed;
@@ -59,7 +64,10 @@ body::after {
   background-size: 256px 256px;
 }
 
-/* ---- CTA shimmer sweep ---- */
+/* ================================================================
+   BUTTON SHIMMER
+   ================================================================ */
+
 .btn-shimmer {
   position: relative;
   overflow: hidden;
@@ -85,7 +93,10 @@ body::after {
   45%, 55% { transform: translateX(100%); }
 }
 
-/* ---- Brasa text gradient ---- */
+/* ================================================================
+   TEXT GRADIENTS
+   ================================================================ */
+
 .text-brasa-gradient {
   background: linear-gradient(135deg, #C06A1A 0%, #E8822A 30%, #F0A050 50%, #E8822A 70%, #C06A1A 100%);
   -webkit-background-clip: text;
@@ -93,7 +104,17 @@ body::after {
   background-clip: text;
 }
 
-/* ---- Marquee — 3-strip GPU technique ---- */
+.text-ocean-gradient {
+  background: linear-gradient(135deg, #0F3458 0%, #1A4B7C 30%, #2668A8 50%, #1A4B7C 70%, #0F3458 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ================================================================
+   MARQUEE
+   ================================================================ */
+
 .marquee-track {
   display: flex;
   width: max-content;
@@ -116,13 +137,15 @@ body::after {
   to   { transform: translate3d(-33.3333%, 0, 0); }
 }
 
-/* ---- Light sweep ---- */
+/* ================================================================
+   HERO ANIMATIONS
+   ================================================================ */
+
 @keyframes light-sweep {
   0% { transform: translateX(-100%) skewX(-12deg); }
   100% { transform: translateX(400%) skewX(-12deg); }
 }
 
-/* ---- Gradient breathe ---- */
 @keyframes gradient-breathe {
   0%, 100% {
     background-position: 0% 50%;
@@ -134,7 +157,19 @@ body::after {
   }
 }
 
-/* ---- Nav underline expand ---- */
+@keyframes hero-ken-burns {
+  0%   { transform: scale(1.1) translate(0, 0); }
+  50%  { transform: scale(1.15) translate(-1%, -0.5%); }
+  100% { transform: scale(1.1) translate(0, 0); }
+}
+.hero-ken-burns {
+  animation: hero-ken-burns 25s ease-in-out infinite;
+}
+
+/* ================================================================
+   NAV UNDERLINE
+   ================================================================ */
+
 .nav-link {
   position: relative;
 }
@@ -153,19 +188,344 @@ body::after {
   left: 0;
 }
 
-/* ---- Mobile CTA pulse ring ---- */
+/* ================================================================
+   PULSE RING (WhatsApp float)
+   ================================================================ */
+
 @keyframes pulse-ring {
   0% { transform: scale(1); opacity: 0.4; }
   100% { transform: scale(1.8); opacity: 0; }
 }
 
-/* ---- Drawer entrance ---- */
+/* ================================================================
+   DRAWER
+   ================================================================ */
+
 @keyframes drawer-fade-in {
   from { opacity: 0; transform: translate3d(0, -4px, 0); }
   to   { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
-/* ---- Reduced Motion ---- */
+/* ================================================================
+   SECTION ORNAMENT — decorative separator
+   ================================================================ */
+
+.section-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 0 auto;
+  width: fit-content;
+}
+.section-ornament::before,
+.section-ornament::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-brasa), transparent);
+}
+
+/* ================================================================
+   TIMELINE
+   ================================================================ */
+
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--color-border-accent) 10%,
+    var(--color-brasa) 50%,
+    var(--color-border-accent) 90%,
+    transparent 100%
+  );
+  transform: translateX(-50%);
+}
+
+.timeline-node {
+  position: absolute;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-brasa);
+  border: 2px solid var(--color-background);
+  transform: translateX(-50%);
+  box-shadow: 0 0 0 4px rgba(232, 130, 42, 0.15);
+  z-index: 2;
+}
+
+@media (max-width: 1023px) {
+  .timeline-line {
+    left: 1rem;
+  }
+  .timeline-node {
+    left: 1rem;
+  }
+}
+
+/* ================================================================
+   SIGNATURE DISHES — horizontal scroll
+   ================================================================ */
+
+.dishes-scroll {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 1.5rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 1rem;
+}
+.dishes-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.dish-card {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-elevated);
+  transition: border-color 0.4s ease, transform 0.4s ease;
+}
+.dish-card:hover {
+  border-color: rgba(232, 130, 42, 0.3);
+  transform: translateY(-4px);
+}
+.dish-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    var(--color-background) 0%,
+    rgba(12, 10, 8, 0.7) 40%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ================================================================
+   GALLERY LIGHTBOX
+   ================================================================ */
+
+@keyframes lightbox-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes lightbox-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(12, 10, 8, 0.95);
+  backdrop-filter: blur(20px);
+  animation: lightbox-fade-in 0.3s ease-out;
+}
+
+.lightbox-image {
+  animation: lightbox-scale-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ================================================================
+   VIDEO PLAY BUTTON
+   ================================================================ */
+
+.video-play-btn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+.video-play-btn:hover .video-play-icon {
+  transform: scale(1.1);
+  box-shadow: 0 0 40px rgba(232, 130, 42, 0.4);
+}
+.video-play-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(232, 130, 42, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  box-shadow: 0 0 0 8px rgba(232, 130, 42, 0.15);
+}
+
+/* ================================================================
+   PRESS CARDS
+   ================================================================ */
+
+.press-card {
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-elevated);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.press-card:hover {
+  border-color: rgba(232, 130, 42, 0.3);
+  transform: translateY(-2px);
+}
+.press-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-brasa), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.press-card:hover::before {
+  opacity: 1;
+}
+
+/* ================================================================
+   IMAGE REVEAL — clip-path animation base
+   ================================================================ */
+
+.image-reveal {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.image-reveal.revealed {
+  clip-path: inset(0 0 0 0);
+}
+
+/* ================================================================
+   GALLERY HOVER OVERLAY
+   ================================================================ */
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+.gallery-item .gallery-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(12, 10, 8, 0.6);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.gallery-item:hover .gallery-overlay {
+  opacity: 1;
+}
+.gallery-item:hover img {
+  transform: scale(1.06);
+}
+
+/* ================================================================
+   COUNTER GLOW — pulse behind animated numbers
+   ================================================================ */
+
+.counter-glow {
+  position: relative;
+}
+.counter-glow::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 130, 42, 0.15) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* ================================================================
+   WAVE DIVIDER
+   ================================================================ */
+
+.wave-divider {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: hidden;
+  line-height: 0;
+}
+.wave-divider svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ================================================================
+   CARD GLOW BORDER on hover
+   ================================================================ */
+
+.card-glow {
+  position: relative;
+  overflow: hidden;
+}
+.card-glow::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(232, 130, 42, 0.3), transparent 50%, rgba(26, 75, 124, 0.2));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+}
+.card-glow:hover::before {
+  opacity: 1;
+}
+
+/* ================================================================
+   SCROLL HINT (horizontal scroll indicator)
+   ================================================================ */
+
+@keyframes scroll-hint {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(8px); }
+}
+
+.scroll-hint-icon {
+  animation: scroll-hint 2s ease-in-out infinite;
+}
+
+/* ================================================================
+   REDUCED MOTION
+   ================================================================ */
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

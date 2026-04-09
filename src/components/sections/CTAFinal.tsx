@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap-setup";
+import { gsap, prefersReducedMotion } from "@/lib/gsap-setup";
 import { SITE } from "@/lib/constants";
 
 export function CTAFinal() {
@@ -43,7 +43,7 @@ export function CTAFinal() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse at 50% 50%, rgba(232,130,42,0.06) 0%, transparent 70%)",
+            "radial-gradient(ellipse at 30% 50%, rgba(26,75,124,0.08) 0%, transparent 50%), radial-gradient(ellipse at 70% 50%, rgba(232,130,42,0.08) 0%, transparent 50%)",
         }}
         aria-hidden="true"
       />
@@ -52,13 +52,17 @@ export function CTAFinal() {
         ref={contentRef}
         className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-8 px-6 text-center"
       >
+        <div className="section-ornament mb-8">
+          <span className="text-brasa/40 text-sm">⚓</span>
+        </div>
+
         <h2 className="font-display text-4xl leading-tight text-foreground lg:text-6xl">
-          Venha Conhecer o Tiquatirao
+          Venha Conhecer o Tiquatirão
         </h2>
 
         <p className="max-w-2xl text-lg leading-relaxed text-silver">
           Reserve sua mesa e descubra os sabores do mar e da brasa que conquistam
-          Sao Paulo ha mais de 27 anos.
+          São Paulo há mais de 27 anos.
         </p>
 
         <div className="mt-2 flex flex-col items-center gap-4 sm:flex-row">
@@ -79,6 +83,8 @@ export function CTAFinal() {
           </a>
         </div>
       </div>
+
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brasa/20 to-transparent" aria-hidden="true" />
     </section>
   );
 }

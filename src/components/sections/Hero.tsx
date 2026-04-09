@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap-setup";
+import { gsap, prefersReducedMotion } from "@/lib/gsap-setup";
 import { SITE } from "@/lib/constants";
 
 function ChevronDown() {
@@ -150,14 +150,14 @@ export default function Hero() {
       className="relative h-svh w-full overflow-hidden"
     >
       {/* Background image */}
-      <div ref={imageRef} className="absolute inset-0 will-change-transform">
+      <div ref={imageRef} className="absolute inset-0">
         <Image
           src="/assets/fachada-predio-barco-amarelo.jpg"
           alt="Fachada do restaurante Tiquatirão Mar & Brasa com barco amarelo decorativo"
           fill
           priority
           sizes="100vw"
-          className="object-cover brightness-[0.28] saturate-[0.75] scale-110"
+          className="object-cover brightness-[0.28] saturate-[0.75] scale-110 hero-ken-burns"
         />
       </div>
 
@@ -188,7 +188,7 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse at 50% 50%, rgba(232,130,42,0.08) 0%, transparent 70%)",
+            "radial-gradient(ellipse at 30% 60%, rgba(26,75,124,0.06) 0%, transparent 50%), radial-gradient(ellipse at 70% 40%, rgba(232,130,42,0.08) 0%, transparent 50%)",
           backgroundSize: "200% 200%",
           animation: "gradient-breathe 8s ease-in-out infinite",
         }}

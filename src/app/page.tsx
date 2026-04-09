@@ -1,14 +1,19 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
+import { WaveDivider } from "@/components/ui/WaveDivider";
 import Hero from "@/components/sections/Hero";
 import BrandMarquee from "@/components/sections/BrandMarquee";
 import { About } from "@/components/sections/About";
+import { History } from "@/components/sections/History";
+import { SignatureDishes } from "@/components/sections/SignatureDishes";
 import { Menu } from "@/components/sections/Menu";
 import { Gallery } from "@/components/sections/Gallery";
+import { VideoShowcase } from "@/components/sections/VideoShowcase";
 import Space from "@/components/sections/Space";
 import Reviews from "@/components/sections/Reviews";
 import Numbers from "@/components/sections/Numbers";
+import { Press } from "@/components/sections/Press";
 import { FAQ } from "@/components/sections/FAQ";
 import { CTAFinal } from "@/components/sections/CTAFinal";
 import { Location } from "@/components/sections/Location";
@@ -18,30 +23,35 @@ export default function Home() {
     <>
       <Header />
       <main>
-        {/* 1. Attention */}
+        {/* 1. Attention — hook the visitor */}
         <Hero />
         <BrandMarquee />
 
-        {/* 2. Identity */}
+        {/* 2. Identity — who we are */}
         <About />
+        <History />
 
         {/* 3. Interest — what we serve */}
+        <WaveDivider />
+        <SignatureDishes />
         <Menu />
 
         {/* 4. Desire — visual proof */}
         <Gallery />
+        <VideoShowcase />
 
         {/* 5. Experience — more than food */}
         <Space />
 
-        {/* 6. Social proof */}
-        <Reviews />
+        {/* 6. Social proof — trust signals */}
         <Numbers />
+        <Reviews />
+        <Press />
 
         {/* 7. Objection handling */}
         <FAQ />
 
-        {/* 8. Action */}
+        {/* 8. Action — convert */}
         <CTAFinal />
 
         {/* 9. Contact & directions */}

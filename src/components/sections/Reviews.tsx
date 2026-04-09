@@ -5,6 +5,17 @@ import { gsap, prefersReducedMotion } from "@/lib/gsap-setup";
 import { TESTIMONIALS } from "@/lib/constants";
 
 /* ------------------------------------------------------------------ */
+/*  Platform badge colors                                              */
+/* ------------------------------------------------------------------ */
+
+const PLATFORM_COLORS: Record<string, string> = {
+  Google: "bg-[#4285F4]",
+  TripAdvisor: "bg-[#34E0A1]",
+  Facebook: "bg-[#1877F2]",
+  iFood: "bg-[#EA1D2C]",
+};
+
+/* ------------------------------------------------------------------ */
 /*  Helpers                                                            */
 /* ------------------------------------------------------------------ */
 
@@ -82,13 +93,17 @@ export default function Reviews() {
         </div>
 
         {/* Testimonial cards */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {TESTIMONIALS.map((testimonial) => (
             <div
               key={testimonial.name}
               data-review
-              className="rounded-lg border border-border bg-surface-elevated p-8"
+              className="card-glow press-card relative rounded-lg border border-border bg-surface-elevated p-8"
             >
+              <span className="pointer-events-none absolute top-4 right-6 font-display text-6xl leading-none text-brasa/10 select-none" aria-hidden="true">
+                &ldquo;
+              </span>
+
               <StarRating count={testimonial.rating} />
 
               <blockquote className="mb-6">
@@ -101,7 +116,8 @@ export default function Reviews() {
                 <p className="font-semibold text-foreground">
                   {testimonial.name}
                 </p>
-                <span className="text-xs uppercase tracking-wider text-muted">
+                <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-wider text-muted">
+                  <span className={`inline-block h-2 w-2 rounded-full ${PLATFORM_COLORS[testimonial.platform] ?? "bg-muted"}`} aria-hidden="true" />
                   {testimonial.platform}
                 </span>
               </div>

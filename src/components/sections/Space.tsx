@@ -255,9 +255,9 @@ export default function Space() {
               <div
                 key={feature.title}
                 data-card
-                className="rounded-lg border border-border bg-surface-elevated p-6"
+                className="card-glow rounded-lg border border-border bg-surface-elevated p-6 transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="mb-4 h-10 w-10 text-brasa">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-brasa/10 text-brasa">
                   <IconComponent />
                 </div>
                 <h3 className="mb-2 font-display text-xl font-semibold text-foreground">

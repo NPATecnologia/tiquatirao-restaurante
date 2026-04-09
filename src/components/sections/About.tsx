@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap-setup";
+import { gsap, prefersReducedMotion } from "@/lib/gsap-setup";
 
 export function About() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -35,12 +35,12 @@ export function About() {
         stagger: 0.15,
       });
 
-      tl.from(
+      gsap.set(image, { clipPath: "inset(100% 0 0 0)" });
+      tl.to(
         image,
         {
-          x: 30,
-          opacity: 0,
-          duration: 0.8,
+          clipPath: "inset(0% 0 0 0)",
+          duration: 1,
           ease: "power3.out",
         },
         "<0.2"
@@ -60,36 +60,43 @@ export function About() {
         {/* Text column */}
         <div ref={textRef}>
           <span className="mb-4 inline-block text-sm font-medium uppercase tracking-[0.3em] text-brasa">
-            Nossa Historia
+            Nossa História
           </span>
+          <div className="section-ornament mt-2 mb-6"><span className="text-brasa/40 text-sm">⚓</span></div>
 
           <h2 className="font-display mb-6 text-4xl leading-tight text-foreground lg:text-5xl">
             Sabores do Mar Desde 1997
           </h2>
 
           <p className="mb-5 max-w-lg text-base leading-relaxed text-silver">
-            Fundado em 1997 pelo Sr. Jose da Mota e seus filhos Kelly e Johnny,
-            com o apoio do Chef Marco Falcao. O objetivo era levar para a Zona
-            Leste de Sao Paulo um restaurante com sabores do mar e a energia
+            Fundado em 1997 pelo Sr. José da Mota e seus filhos Kelly e Johnny,
+            com o apoio do Chef Marco Falcão. O objetivo era levar para a Zona
+            Leste de São Paulo um restaurante com sabores do mar e a energia
             praiana.
           </p>
 
           <p className="max-w-lg text-base leading-relaxed text-muted">
-            Mais de duas decadas depois, o Tiquatirao segue fiel a sua missao:
-            reunir familias e amigos ao redor de pratos generosos, com
-            ingredientes frescos do litoral e o calor inconfundivel da brasa.
-            Cada refeicao e um convite para sentir o litoral sem sair da capital.
+            Mais de duas décadas depois, o Tiquatirão segue fiel a sua missão:
+            reunir famílias e amigos ao redor de pratos generosos, com
+            ingredientes frescos do litoral e o calor inconfundível da brasa.
+            Cada refeição é um convite para sentir o litoral sem sair da capital.
           </p>
+
+          <blockquote className="mt-8 border-l-2 border-ocean pl-4">
+            <p className="font-display text-lg italic text-ocean-light">
+              &ldquo;Cada refeição é um convite para sentir o litoral sem sair da capital.&rdquo;
+            </p>
+          </blockquote>
         </div>
 
         {/* Image column */}
         <div
           ref={imageRef}
-          className="relative aspect-[4/5] overflow-hidden rounded-lg border border-border"
+          className="image-reveal relative aspect-[4/5] overflow-hidden rounded-lg border border-border"
         >
           <Image
             src="/assets/fachada-entrada-logo-tiquatirao.jpg"
-            alt="Fachada do restaurante Tiquatirao Mar e Brasa com letreiro iluminado"
+            alt="Fachada do restaurante Tiquatirão Mar e Brasa com letreiro iluminado"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"

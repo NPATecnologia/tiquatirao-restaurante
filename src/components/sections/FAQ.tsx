@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap-setup";
+import { gsap, prefersReducedMotion } from "@/lib/gsap-setup";
 import { FAQ_ITEMS } from "@/lib/constants";
 
 function ChevronIcon({ open }: { open: boolean }) {
@@ -72,7 +72,7 @@ export function FAQ() {
         {/* Header */}
         <div className="mb-14 text-center">
           <span className="mb-4 inline-block text-sm font-medium uppercase tracking-[0.3em] text-brasa">
-            Duvidas
+            Dúvidas
           </span>
           <h2 className="font-display text-4xl leading-tight text-foreground lg:text-5xl">
             Perguntas Frequentes
