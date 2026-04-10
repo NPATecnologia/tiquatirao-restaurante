@@ -134,7 +134,7 @@ export const SIGNATURE_DISHES = [
     name: "Paella Valenciana",
     description:
       "Nossa estrela. Arroz espanhol com camarões, lulas, mariscos e açafrão, servido na panela de ferro.",
-    image: "/assets/paella-frutos-do-mar-grande.jpg",
+    image: "/assets/paella-signature.jpg",
     serves: "3–4 pessoas",
     tag: "Mais Pedido",
   },
@@ -142,7 +142,7 @@ export const SIGNATURE_DISHES = [
     name: "Petiscos do Mar",
     description:
       "Seleção crocante de lula, camarão e peixe empanados com molho tártaro da casa.",
-    image: "/assets/petisco-frutos-do-mar-empanados.jpg",
+    image: "/assets/petiscos-signature.jpg",
     serves: "2–3 pessoas",
     tag: "Para Compartilhar",
   },
@@ -150,7 +150,7 @@ export const SIGNATURE_DISHES = [
     name: "Picanha Premium",
     description:
       "Corte nobre grelhado no ponto, acompanhado de arroz, farofa e vinagrete.",
-    image: "/assets/prato-file-arroz-batata-frita.jpg",
+    image: "/assets/picanha-signature.jpg",
     serves: "2 pessoas",
     tag: "Mar & Brasa",
   },
@@ -158,7 +158,7 @@ export const SIGNATURE_DISHES = [
     name: "Frango na Brasa",
     description:
       "Peito de frango grelhado com ervas finas, arroz e legumes salteados.",
-    image: "/assets/prato-frango-grelhado-arroz-legumes.jpg",
+    image: "/assets/frango-signature.jpg",
     serves: "1–2 pessoas",
     tag: "Leve & Saboroso",
   },
@@ -166,7 +166,7 @@ export const SIGNATURE_DISHES = [
     name: "Peixe Dourado",
     description:
       "Filé de peixe empanado na farinha panko com arroz branco e batatas rústicas.",
-    image: "/assets/prato-peixe-empanado-arroz-batatas.jpg",
+    image: "/assets/peixe-signature.jpg",
     serves: "2 pessoas",
     tag: "Clássico",
   },

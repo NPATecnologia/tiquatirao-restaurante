@@ -1,13 +1,53 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { gsap, prefersReducedMotion } from "@/lib/gsap-setup";
 import { SIGNATURE_DISHES } from "@/lib/constants";
 
+function ChevronLeft() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M15 18l-6-6 6-6" />
+    </svg>
+  );
+}
+
+function ChevronRight() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M9 18l6-6-6-6" />
+    </svg>
+  );
+}
+
 export function SignatureDishes() {
   const sectionRef = useRef<HTMLElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  function updateScrollState() {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 10);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+  }
+
+  function scrollBy(direction: "left" | "right") {
+    const el = scrollRef.current;
+    if (!el) return;
+    const cardWidth = window.innerWidth >= 1024 ? 380 : 320;
+    el.scrollBy({ left: direction === "right" ? cardWidth + 24 : -(cardWidth + 24), behavior: "smooth" });
+  }
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    updateScrollState();
+    el.addEventListener("scroll", updateScrollState, { passive: true });
+    return () => el.removeEventListener("scroll", updateScrollState);
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -52,19 +92,43 @@ export function SignatureDishes() {
       ref={sectionRef}
       className="py-24 lg:py-32"
     >
-      {/* Header */}
-      <div className="mx-auto mb-16 max-w-7xl px-6 text-center">
-        <span className="mb-4 inline-block text-sm font-medium uppercase tracking-[0.3em] text-brasa">
-          Os favoritos da casa
-        </span>
-        <h2 className="font-display text-4xl leading-tight text-foreground lg:text-5xl">
-          Pratos Assinatura
-        </h2>
+      {/* Header + nav arrows */}
+      <div className="mx-auto mb-16 max-w-7xl px-6">
+        <div className="flex items-end justify-between">
+          <div>
+            <span className="mb-4 inline-block text-sm font-medium uppercase tracking-[0.3em] text-brasa">
+              Os favoritos da casa
+            </span>
+            <h2 className="font-display text-4xl leading-tight text-foreground lg:text-5xl">
+              Pratos Assinatura
+            </h2>
+          </div>
+
+          <div className="hidden gap-2 sm:flex">
+            <button
+              onClick={() => scrollBy("left")}
+              disabled={!canScrollLeft}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-foreground/60 transition-all hover:border-brasa hover:text-brasa disabled:opacity-30 disabled:hover:border-border disabled:hover:text-foreground/60"
+              aria-label="Anterior"
+            >
+              <ChevronLeft />
+            </button>
+            <button
+              onClick={() => scrollBy("right")}
+              disabled={!canScrollRight}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-foreground/60 transition-all hover:border-brasa hover:text-brasa disabled:opacity-30 disabled:hover:border-border disabled:hover:text-foreground/60"
+              aria-label="Próximo"
+            >
+              <ChevronRight />
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* Horizontal scroll */}
+      {/* Horizontal scroll — data-lenis-prevent stops smooth scroll from capturing wheel */}
       <div
         ref={scrollRef}
+        data-lenis-prevent
         className="dishes-scroll pl-6 lg:pl-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]"
       >
         {SIGNATURE_DISHES.map((dish) => (
@@ -73,7 +137,6 @@ export function SignatureDishes() {
             data-dish-card
             className="dish-card w-[320px] flex-shrink-0 lg:w-[380px]"
           >
-            {/* Image */}
             <div className="relative aspect-[4/3]">
               <Image
                 src={dish.image}
@@ -82,14 +145,11 @@ export function SignatureDishes() {
                 sizes="(max-width: 1024px) 320px, 380px"
                 className="object-cover"
               />
-
-              {/* Tag badge — above the gradient overlay */}
               <span className="absolute right-3 top-3 z-10 rounded-full bg-brasa/20 px-3 py-1 text-xs font-medium text-brasa backdrop-blur-sm">
                 {dish.tag}
               </span>
             </div>
 
-            {/* Content — positioned over the ::after gradient */}
             <div className="absolute inset-x-0 bottom-0 z-10 p-5">
               <h3 className="font-display text-xl text-foreground">
                 {dish.name}
@@ -104,12 +164,11 @@ export function SignatureDishes() {
           </article>
         ))}
 
-        {/* Right spacer so last card doesn't hug the edge */}
         <div className="w-6 flex-shrink-0 lg:w-12" aria-hidden="true" />
       </div>
 
-      {/* Scroll hint */}
-      <div className="mx-auto mt-6 max-w-7xl px-6 text-right">
+      {/* Mobile scroll hint */}
+      <div className="mx-auto mt-6 max-w-7xl px-6 text-right sm:hidden">
         <span className="text-xs tracking-wide text-muted">
           Arraste para ver mais{" "}
           <span className="scroll-hint-icon inline-block">&rarr;</span>
