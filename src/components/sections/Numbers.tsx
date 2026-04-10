@@ -16,6 +16,11 @@ function parseStatValue(value: string): { target: number; suffix: string; decima
   return { target, suffix, decimals };
 }
 
+const PARSED_STATS = STATS.map((stat) => ({
+  ...stat,
+  ...parseStatValue(stat.value),
+}));
+
 export default function Numbers() {
   const sectionRef = useRef<HTMLElement>(null);
   const counterRefs = useRef<(HTMLSpanElement | null)[]>([]);
@@ -49,20 +54,19 @@ export default function Numbers() {
           start: "top 85%",
           once: true,
           onEnter: () => {
-            STATS.forEach((stat, i) => {
+            PARSED_STATS.forEach((stat, i) => {
               const el = counterRefs.current[i];
               if (!el) return;
 
-              const { target, decimals } = parseStatValue(stat.value);
               const proxy = { val: 0 };
 
               gsap.to(proxy, {
-                val: target,
+                val: stat.target,
                 duration: 2,
                 ease: "power2.out",
                 delay: i * 0.15,
                 onUpdate: () => {
-                  el.textContent = proxy.val.toFixed(decimals);
+                  el.textContent = proxy.val.toFixed(stat.decimals);
                 },
               });
             });
@@ -83,22 +87,16 @@ export default function Numbers() {
     >
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-          {STATS.map((stat, index) => {
-            const { suffix } = parseStatValue(stat.value);
-            return (
-              <div key={stat.label} data-stat className="counter-glow relative text-center">
-                <p className="pointer-events-none absolute inset-0 flex items-center justify-center font-display text-6xl font-bold text-ocean/20 select-none lg:text-7xl" aria-hidden="true">
-                  {stat.label}
+          {PARSED_STATS.map((stat, index) => (
+              <div key={stat.label} data-stat className="counter-glow text-center">
+                <p className="font-display text-4xl font-bold text-brasa lg:text-5xl">
+                  <span ref={(el) => { counterRefs.current[index] = el; }}>0</span>{stat.suffix}
                 </p>
-                <p className="relative font-display text-4xl font-bold text-brasa lg:text-5xl">
-                  <span ref={(el) => { counterRefs.current[index] = el; }}>0</span>{suffix}
-                </p>
-                <p className="relative mt-2 text-sm uppercase tracking-wider text-muted">
+                <p className="mt-2 text-sm uppercase tracking-wider text-muted">
                   {stat.label}
                 </p>
               </div>
-            );
-          })}
+          ))}
         </div>
       </div>
     </section>

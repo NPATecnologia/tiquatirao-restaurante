@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap, prefersReducedMotion } from "@/lib/gsap-setup";
 import { SITE } from "@/lib/constants";
@@ -12,9 +12,7 @@ export function VideoShowcase() {
   const [isPlaying, setIsPlaying] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const handlePlay = useCallback(() => {
-    setIsPlaying(true);
-  }, []);
+  const handlePlay = () => setIsPlaying(true);
 
   useEffect(() => {
     const container = containerRef.current;

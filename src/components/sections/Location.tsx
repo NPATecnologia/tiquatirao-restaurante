@@ -1,4 +1,4 @@
-import { SITE } from "@/lib/constants";
+import { SITE, PAYMENT_METHODS } from "@/lib/constants";
 
 function PinIcon() {
   return (
@@ -146,6 +146,30 @@ export function Location() {
             <span>Ver no Google Maps</span>
             <ExternalLinkIcon />
           </a>
+
+          {/* Payment methods */}
+          <div className="mt-10 border-t border-border pt-8">
+            <h3 className="mb-4 text-sm font-medium uppercase tracking-[0.2em] text-foreground/60">
+              Formas de Pagamento
+            </h3>
+            <div className="flex flex-wrap gap-3">
+              {PAYMENT_METHODS.map((method) => (
+                <span
+                  key={method.label}
+                  title={method.note ?? undefined}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface-elevated px-3 py-1.5 text-sm text-silver"
+                >
+                  {method.label}
+                  {method.note && (
+                    <span className="text-[10px] text-muted">*</span>
+                  )}
+                </span>
+              ))}
+            </div>
+            <p className="mt-2 text-xs text-muted">
+              * Consultar bandeiras disponíveis no estabelecimento.
+            </p>
+          </div>
         </div>
 
         {/* Map column */}

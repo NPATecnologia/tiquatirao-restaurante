@@ -4,6 +4,9 @@ import Image from "next/image";
 const SOCIAL_LINKS = [
   { label: "Instagram", href: SITE.instagram },
   { label: "Facebook", href: SITE.facebook },
+  { label: "TikTok", href: SITE.tiktok },
+  { label: "Threads", href: SITE.threads },
+  { label: "LinkedIn", href: SITE.linkedin },
   { label: "TripAdvisor", href: SITE.tripadvisor },
   { label: "iFood", href: SITE.ifood },
 ] as const;

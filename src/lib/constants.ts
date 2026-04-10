@@ -9,6 +9,9 @@ export const SITE = {
   foundedYear: 1997,
   instagram: "https://www.instagram.com/tiquatiraorestaurante/",
   facebook: "https://www.facebook.com/Tiquatirao/",
+  tiktok: "https://www.tiktok.com/@tiquatiraorestaurante",
+  threads: "https://www.threads.com/@tiquatiraorestaurante",
+  linkedin: "https://www.linkedin.com/in/tiquatir%C3%A3o-restaurante-476b49234/",
   ifood: "https://www.ifood.com.br/delivery/sao-paulo-sp/restaurante-tiquatirao-frutos-do-mar-penha-de-franca/d6b9dea7-ea42-499c-a564-4af585d2a890",
   tripadvisor: "https://www.tripadvisor.com.br/Restaurant_Review-g303631-d5349937-Reviews-Tiquatirao_Frutos_Do_Mar-Sao_Paulo_State_of_Sao_Paulo.html",
   youtube: "https://www.youtube.com/watch?v=LEtamk7pkxQ",
@@ -17,6 +20,14 @@ export const SITE = {
   whatsappUrl: `https://wa.me/551126418116?text=${encodeURIComponent("Olá! Gostaria de fazer uma reserva no Tiquatirão.")}`,
   mapsEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.5144435107345!2d-46.53934602400041!3d-23.51399257883244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce5fb5366bea1b%3A0x1f7ea0dd88009e77!2sRestaurante%20Tiquatir%C3%A3o%20Mar%20%26%20Brasa!5e0!3m2!1spt-BR!2sbr!4v1775767864595!5m2!1spt-BR!2sbr",
 } as const;
+
+export const PAYMENT_METHODS = [
+  { label: "Pix", icon: "pix", note: null },
+  { label: "Dinheiro", icon: "cash", note: null },
+  { label: "Crédito", icon: "credit", note: "Consultar bandeiras" },
+  { label: "Débito", icon: "debit", note: "Consultar bandeiras" },
+  { label: "Vale-refeição", icon: "voucher", note: "Consultar bandeiras" },
+] as const;
 
 export const NAV_LINKS = [
   { label: "Início", href: "#inicio" },
@@ -222,33 +233,21 @@ export const HISTORY_EVENTS = [
 
 export const PRESS_MENTIONS = [
   {
-    outlet: "Veja São Paulo",
-    title: "Os melhores restaurantes de frutos do mar da Zona Leste",
-    year: 2023,
-    url: SITE.tripadvisor,
+    outlet: "Empresários de Sucesso TV",
+    title: "Matéria especial sobre o Restaurante Tiquatirão",
+    year: 2019,
+    url: SITE.youtube,
+  },
+  {
+    outlet: "Os Melhores da Gastronomia",
+    title: "Tiquatirão Frutos do Mar — Referência na Zona Leste",
+    year: 2021,
+    url: "https://www.osmelhoresdagastronomia.com.br/2021/10/21/tiquatirao-frutos-do-mar/",
   },
   {
     outlet: "TripAdvisor",
     title: "Travelers' Choice — Restaurante premiado",
     year: 2024,
-    url: SITE.tripadvisor,
-  },
-  {
-    outlet: "Folha de S.Paulo",
-    title: "Paella que serve a família inteira: conheça o Tiquatirão",
-    year: 2022,
-    url: SITE.tripadvisor,
-  },
-  {
-    outlet: "UOL Comer & Beber",
-    title: "10 restaurantes imperdíveis na Zona Leste de São Paulo",
-    year: 2023,
-    url: SITE.tripadvisor,
-  },
-  {
-    outlet: "Guia da Folha",
-    title: "Onde comer frutos do mar na Penha de França",
-    year: 2021,
     url: SITE.tripadvisor,
   },
   {
@@ -291,9 +290,9 @@ export const FAQ_ITEMS = [
       "Sim! Temos brinquedão com monitoria para crianças, para que os pais possam aproveitar a refeição com tranquilidade.",
   },
   {
-    question: "Aceitam todos os cartões?",
+    question: "Quais as formas de pagamento?",
     answer:
-      "Sim, aceitamos todas as bandeiras de cartão de crédito e débito, além de Pix.",
+      "Aceitamos Pix, dinheiro, cartão de crédito e débito (consultar bandeiras disponíveis) e vale-refeição (consultar bandeiras disponíveis).",
   },
   {
     question: "As porções servem quantas pessoas?",

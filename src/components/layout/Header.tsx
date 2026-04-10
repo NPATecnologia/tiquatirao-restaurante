@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { SITE, NAV_LINKS } from "@/lib/constants";
@@ -33,50 +33,42 @@ export function Header() {
     };
   }, [mobileOpen]);
 
-  // Close mobile menu on Escape
-  useEffect(() => {
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape" && mobileOpen) {
-        setMobileOpen(false);
-      }
-    }
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [mobileOpen]);
-
-  // Focus management for mobile menu
+  // Focus management + keyboard handling for mobile menu (WCAG 2.4.3)
   useEffect(() => {
     if (mobileOpen) {
       requestAnimationFrame(() => mobileCloseRef.current?.focus());
     } else {
       hamburgerRef.current?.focus();
     }
-  }, [mobileOpen]);
 
-  // Tab trap for mobile menu
-  useEffect(() => {
     if (!mobileOpen) return;
 
-    function handleTabTrap(e: KeyboardEvent) {
-      if (e.key !== "Tab") return;
-      const overlay = mobileOverlayRef.current;
-      if (!overlay) return;
-      const focusable = overlay.querySelectorAll<HTMLElement>('a[href], button, [tabindex]:not([tabindex="-1"])');
-      if (focusable.length === 0) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (e.shiftKey) {
-        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
-      } else {
-        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setMobileOpen(false);
+        return;
+      }
+
+      if (e.key === "Tab") {
+        const overlay = mobileOverlayRef.current;
+        if (!overlay) return;
+        const focusable = overlay.querySelectorAll<HTMLElement>('a[href], button, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+        } else {
+          if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
       }
     }
 
-    window.addEventListener("keydown", handleTabTrap);
-    return () => window.removeEventListener("keydown", handleTabTrap);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [mobileOpen]);
 
-  const closeMobile = useCallback(() => setMobileOpen(false), []);
+  const closeMobile = () => setMobileOpen(false);
 
   return (
     <>

@@ -62,6 +62,7 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
+  will-change: transform;
 }
 
 /* ================================================================
@@ -99,13 +100,6 @@ body::after {
 
 .text-brasa-gradient {
   background: linear-gradient(135deg, #C06A1A 0%, #E8822A 30%, #F0A050 50%, #E8822A 70%, #C06A1A 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-ocean-gradient {
-  background: linear-gradient(135deg, #0F3458 0%, #1A4B7C 30%, #2668A8 50%, #1A4B7C 70%, #0F3458 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

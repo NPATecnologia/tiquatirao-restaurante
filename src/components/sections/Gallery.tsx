@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { gsap, prefersReducedMotion } from "@/lib/gsap-setup";
 
@@ -48,18 +48,19 @@ export function Gallery() {
   const headerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const closeLightbox = useCallback(() => setLightboxIndex(null), []);
-  const prevImage = useCallback(() => {
+  const closeLightbox = () => setLightboxIndex(null);
+  const prevImage = () => {
     setLightboxIndex(prev => prev !== null ? (prev - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length : null);
-  }, []);
-  const nextImage = useCallback(() => {
+  };
+  const nextImage = () => {
     setLightboxIndex(prev => prev !== null ? (prev + 1) % GALLERY_IMAGES.length : null);
-  }, []);
+  };
 
-  // Save trigger and focus close button when lightbox opens; restore focus on close
+  // WCAG 2.4.3: restore focus to trigger element when lightbox closes
   useEffect(() => {
     if (lightboxIndex !== null) {
       triggerRef.current = document.activeElement as HTMLDivElement | null;
@@ -74,12 +75,12 @@ export function Gallery() {
     if (lightboxIndex === null) return;
 
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") { closeLightbox(); return; }
-      if (e.key === "ArrowLeft") { prevImage(); return; }
-      if (e.key === "ArrowRight") { nextImage(); return; }
+      if (e.key === "Escape") { setLightboxIndex(null); return; }
+      if (e.key === "ArrowLeft") { setLightboxIndex(prev => prev !== null ? (prev - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length : null); return; }
+      if (e.key === "ArrowRight") { setLightboxIndex(prev => prev !== null ? (prev + 1) % GALLERY_IMAGES.length : null); return; }
 
       if (e.key === "Tab") {
-        const overlay = document.querySelector<HTMLElement>('[role="dialog"][aria-label="Visualização da imagem"]');
+        const overlay = overlayRef.current;
         if (!overlay) return;
         const focusable = overlay.querySelectorAll<HTMLElement>('button, [tabindex]:not([tabindex="-1"])');
         if (focusable.length === 0) return;
@@ -95,7 +96,7 @@ export function Gallery() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [lightboxIndex, closeLightbox, prevImage, nextImage]);
+  }, [lightboxIndex]);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
@@ -199,7 +200,7 @@ export function Gallery() {
     </section>
 
     {lightboxIndex !== null && (
-      <div className="lightbox-overlay" onClick={closeLightbox} role="dialog" aria-modal="true" aria-label="Visualização da imagem">
+      <div ref={overlayRef} className="lightbox-overlay" onClick={closeLightbox} role="dialog" aria-modal="true" aria-label="Visualização da imagem">
         <button ref={closeButtonRef} onClick={closeLightbox} className="absolute top-6 right-6 z-10 text-foreground/60 hover:text-foreground transition-colors" aria-label="Fechar">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
         </button>
