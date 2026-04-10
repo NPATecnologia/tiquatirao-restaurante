@@ -4,15 +4,15 @@ import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { WaveDivider } from "@/components/ui/WaveDivider";
 import Hero from "@/components/sections/Hero";
 import BrandMarquee from "@/components/sections/BrandMarquee";
-import { About } from "@/components/sections/About";
-import { History } from "@/components/sections/History";
 import { SignatureDishes } from "@/components/sections/SignatureDishes";
 import { Menu } from "@/components/sections/Menu";
+import { About } from "@/components/sections/About";
+import { History } from "@/components/sections/History";
 import { Gallery } from "@/components/sections/Gallery";
 import { VideoShowcase } from "@/components/sections/VideoShowcase";
 import Space from "@/components/sections/Space";
-import Reviews from "@/components/sections/Reviews";
 import Numbers from "@/components/sections/Numbers";
+import Reviews from "@/components/sections/Reviews";
 import { Press } from "@/components/sections/Press";
 import { FAQ } from "@/components/sections/FAQ";
 import { CTAFinal } from "@/components/sections/CTAFinal";
@@ -27,16 +27,16 @@ export default function Home() {
         <Hero />
         <BrandMarquee />
 
-        {/* 2. Identity — who we are */}
+        {/* 2. Desire — what we serve (show food before story) */}
+        <SignatureDishes />
+        <WaveDivider />
+        <Menu />
+
+        {/* 3. Identity — who we are (now that they're hungry) */}
         <About />
         <History />
 
-        {/* 3. Interest — what we serve */}
-        <WaveDivider />
-        <SignatureDishes />
-        <Menu />
-
-        {/* 4. Desire — visual proof */}
+        {/* 4. Visual proof — immersive cinema block */}
         <Gallery />
         <VideoShowcase />
 

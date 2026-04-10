@@ -142,7 +142,7 @@ export function Gallery() {
     <section
       ref={sectionRef}
       id="galeria"
-      className="py-24 lg:py-32"
+      className="bg-[#080604] py-24 lg:py-32"
     >
       <div className="mx-auto max-w-7xl px-6">
         {/* Header */}

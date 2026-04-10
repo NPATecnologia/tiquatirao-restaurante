@@ -234,7 +234,7 @@ export default function Space() {
     <section
       ref={sectionRef}
       id="espaco"
-      className="bg-surface py-24 lg:py-32"
+      className="border-y border-border bg-surface-light py-24 lg:py-32"
     >
       <div className="mx-auto max-w-7xl px-6">
         {/* Header */}

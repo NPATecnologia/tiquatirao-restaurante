@@ -83,7 +83,7 @@ export default function Numbers() {
   return (
     <section
       ref={sectionRef}
-      className="border-y border-border bg-surface-light py-24 lg:py-32"
+      className="border-y border-border bg-surface-light py-12 lg:py-16"
     >
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">

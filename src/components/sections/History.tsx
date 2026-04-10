@@ -54,7 +54,7 @@ export function History() {
     <section
       ref={sectionRef}
       id="historia"
-      className="py-24 lg:py-32"
+      className="bg-surface-light py-24 lg:py-32"
     >
       <div className="mx-auto max-w-7xl px-6">
         {/* Header */}

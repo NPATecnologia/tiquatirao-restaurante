@@ -77,7 +77,7 @@ export function Press() {
   return (
     <section
       ref={sectionRef}
-      className="py-24 lg:py-32"
+      className="py-16 lg:py-20"
     >
       <div className="mx-auto max-w-7xl px-6">
         {/* Header */}
