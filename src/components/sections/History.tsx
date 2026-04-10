@@ -86,7 +86,7 @@ export function History() {
                   <h3 className="font-display mt-1 text-base text-foreground">
                     {event.title}
                   </h3>
-                  <p className="mt-2 text-xs leading-relaxed text-muted">
+                  <p className="mt-2 text-sm leading-relaxed text-muted">
                     {event.description}
                   </p>
                 </div>

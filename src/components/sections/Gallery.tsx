@@ -98,6 +98,39 @@ export function Gallery() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [lightboxIndex]);
 
+  // Touch swipe support for lightbox
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const overlay = overlayRef.current;
+    if (!overlay) return;
+
+    let startX = 0;
+    let startY = 0;
+
+    function onTouchStart(e: TouchEvent) {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    }
+
+    function onTouchEnd(e: TouchEvent) {
+      const dx = e.changedTouches[0].clientX - startX;
+      const dy = e.changedTouches[0].clientY - startY;
+      if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
+      if (dx > 0) {
+        setLightboxIndex(prev => prev !== null ? (prev - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length : null);
+      } else {
+        setLightboxIndex(prev => prev !== null ? (prev + 1) % GALLERY_IMAGES.length : null);
+      }
+    }
+
+    overlay.addEventListener("touchstart", onTouchStart, { passive: true });
+    overlay.addEventListener("touchend", onTouchEnd, { passive: true });
+    return () => {
+      overlay.removeEventListener("touchstart", onTouchStart);
+      overlay.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [lightboxIndex]);
+
   useEffect(() => {
     if (prefersReducedMotion()) return;
 
@@ -201,14 +234,14 @@ export function Gallery() {
 
     {lightboxIndex !== null && (
       <div ref={overlayRef} className="lightbox-overlay" onClick={closeLightbox} role="dialog" aria-modal="true" aria-label="Visualização da imagem">
-        <button ref={closeButtonRef} onClick={closeLightbox} className="absolute top-6 right-6 z-10 text-foreground/60 hover:text-foreground transition-colors" aria-label="Fechar">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+        <button ref={closeButtonRef} onClick={closeLightbox} className="absolute top-4 right-4 z-10 flex size-11 items-center justify-center rounded-full bg-foreground/10 text-foreground/60 backdrop-blur-sm transition-colors hover:text-foreground" aria-label="Fechar">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
         </button>
-        <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 text-foreground/60 hover:text-foreground transition-colors" aria-label="Anterior">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M15 18l-6-6 6-6" /></svg>
+        <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute left-3 top-1/2 -translate-y-1/2 z-10 hidden size-11 items-center justify-center rounded-full bg-foreground/10 text-foreground/60 backdrop-blur-sm transition-colors hover:text-foreground sm:flex" aria-label="Anterior">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M15 18l-6-6 6-6" /></svg>
         </button>
-        <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 text-foreground/60 hover:text-foreground transition-colors" aria-label="Próxima">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 18l6-6-6-6" /></svg>
+        <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-3 top-1/2 -translate-y-1/2 z-10 hidden size-11 items-center justify-center rounded-full bg-foreground/10 text-foreground/60 backdrop-blur-sm transition-colors hover:text-foreground sm:flex" aria-label="Próxima">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 18l6-6-6-6" /></svg>
         </button>
         <div className="lightbox-image relative h-[80vh] w-[90vw] max-w-5xl" onClick={(e) => e.stopPropagation()}>
           <Image src={GALLERY_IMAGES[lightboxIndex].src} alt={GALLERY_IMAGES[lightboxIndex].alt} fill className="object-contain" sizes="90vw" />

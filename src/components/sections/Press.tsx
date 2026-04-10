@@ -102,7 +102,7 @@ export function Press() {
               className="press-card group block"
             >
               {/* External link icon */}
-              <span className="absolute right-4 top-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span className="absolute right-4 top-4 opacity-60 sm:opacity-0 sm:transition-opacity sm:duration-300 sm:group-hover:opacity-100">
                 <ExternalLinkIcon />
               </span>
 

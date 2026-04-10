@@ -397,6 +397,12 @@ body::after {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
+/* Mobile: always show subtle overlay so users know images are tappable */
+@media (hover: none) {
+  .gallery-item .gallery-overlay {
+    opacity: 0.5;
+  }
+}
 .gallery-item:hover .gallery-overlay {
   opacity: 1;
 }

@@ -9,7 +9,7 @@ export function WhatsAppFloat() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Fale conosco pelo WhatsApp"
-      className="fixed bottom-6 right-6 z-40 flex size-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-black/25 transition-transform hover:scale-110 active:scale-95 md:size-16 pb-[env(safe-area-inset-bottom)]"
+      className="fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] right-6 z-40 flex size-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-black/25 transition-transform hover:scale-110 active:scale-95 md:size-16"
     >
       {/* Pulse ring */}
       <span
