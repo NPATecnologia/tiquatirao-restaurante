@@ -1,84 +1,80 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { gsap, prefersReducedMotion } from "@/lib/gsap-setup";
+import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap-setup";
 import { SIGNATURE_DISHES } from "@/lib/constants";
-
-function ChevronLeft() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M15 18l-6-6 6-6" />
-    </svg>
-  );
-}
-
-function ChevronRight() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M9 18l6-6-6-6" />
-    </svg>
-  );
-}
 
 export function SignatureDishes() {
   const sectionRef = useRef<HTMLElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-
-  function updateScrollState() {
-    const el = scrollRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 10);
-    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
-  }
-
-  function scrollBy(direction: "left" | "right") {
-    const el = scrollRef.current;
-    if (!el) return;
-    const cardWidth = window.innerWidth >= 1024 ? 380 : 320;
-    el.scrollBy({ left: direction === "right" ? cardWidth + 24 : -(cardWidth + 24), behavior: "smooth" });
-  }
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    updateScrollState();
-    el.addEventListener("scroll", updateScrollState, { passive: true });
-    return () => el.removeEventListener("scroll", updateScrollState);
-  }, []);
+  const imageContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
-    const scroll = scrollRef.current;
-    if (!section || !scroll) return;
+    const imageContainer = imageContainerRef.current;
+    if (!section || !imageContainer) return;
 
-    const cards = scroll.querySelectorAll<HTMLElement>("[data-dish-card]");
-    if (cards.length === 0) return;
+    const panels = section.querySelectorAll<HTMLElement>("[data-dish-panel]");
+    const images = imageContainer.querySelectorAll<HTMLElement>("[data-dish-image]");
+
+    if (panels.length === 0 || images.length === 0) return;
 
     if (prefersReducedMotion()) {
-      cards.forEach((card) => {
-        card.style.opacity = "1";
-        card.style.transform = "translateY(0)";
-      });
+      panels.forEach((p) => { p.style.opacity = "1"; });
+      images.forEach((img, i) => { img.style.opacity = i === 0 ? "1" : "0"; });
       return;
     }
 
     const ctx = gsap.context(() => {
-      gsap.set(cards, { y: 40, opacity: 0 });
+      // Each panel triggers its corresponding image
+      panels.forEach((panel, i) => {
+        // Fade in text panel on scroll
+        gsap.set(panel, { opacity: 0, y: 30 });
 
-      gsap.to(cards, {
-        y: 0,
-        opacity: 1,
-        duration: 0.7,
-        ease: "power3.out",
-        stagger: 0.12,
-        scrollTrigger: {
-          trigger: section,
-          start: "top 80%",
-          once: true,
-        },
+        gsap.to(panel, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: panel,
+            start: "top 75%",
+            end: "bottom 25%",
+            toggleActions: "play reverse play reverse",
+          },
+        });
+
+        // Desktop: crossfade images based on which panel is in view
+        if (window.innerWidth >= 1024) {
+          ScrollTrigger.create({
+            trigger: panel,
+            start: "top 60%",
+            end: "bottom 40%",
+            onEnter: () => {
+              images.forEach((img, j) => {
+                gsap.to(img, {
+                  opacity: j === i ? 1 : 0,
+                  duration: 0.5,
+                  ease: "power2.inOut",
+                });
+              });
+            },
+            onEnterBack: () => {
+              images.forEach((img, j) => {
+                gsap.to(img, {
+                  opacity: j === i ? 1 : 0,
+                  duration: 0.5,
+                  ease: "power2.inOut",
+                });
+              });
+            },
+          });
+        }
+      });
+
+      // Set first image visible
+      images.forEach((img, i) => {
+        gsap.set(img, { opacity: i === 0 ? 1 : 0 });
       });
     }, section);
 
@@ -92,87 +88,128 @@ export function SignatureDishes() {
       ref={sectionRef}
       className="py-24 lg:py-32"
     >
-      {/* Header + nav arrows */}
-      <div className="mx-auto mb-16 max-w-7xl px-6">
-        <div className="flex items-end justify-between">
-          <div>
-            <span className="mb-4 inline-block text-sm font-medium uppercase tracking-[0.3em] text-brasa">
-              Os favoritos da casa
-            </span>
-            <h2 className="font-display text-4xl leading-tight text-foreground lg:text-5xl">
-              Pratos Assinatura
-            </h2>
-          </div>
-
-          <div className="hidden gap-2 sm:flex">
-            <button
-              onClick={() => scrollBy("left")}
-              disabled={!canScrollLeft}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-foreground/60 transition-all hover:border-brasa hover:text-brasa disabled:opacity-30 disabled:hover:border-border disabled:hover:text-foreground/60"
-              aria-label="Anterior"
-            >
-              <ChevronLeft />
-            </button>
-            <button
-              onClick={() => scrollBy("right")}
-              disabled={!canScrollRight}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-foreground/60 transition-all hover:border-brasa hover:text-brasa disabled:opacity-30 disabled:hover:border-border disabled:hover:text-foreground/60"
-              aria-label="Próximo"
-            >
-              <ChevronRight />
-            </button>
-          </div>
+      {/* Header */}
+      <div className="mx-auto mb-16 max-w-7xl px-6 text-center lg:mb-20">
+        <span className="mb-4 inline-block text-sm font-medium uppercase tracking-[0.3em] text-brasa">
+          Os favoritos da casa
+        </span>
+        <h2 className="font-display text-4xl leading-tight text-foreground lg:text-5xl">
+          Pratos Assinatura
+        </h2>
+        <div className="section-ornament mt-4">
+          <span className="text-brasa/40 text-sm">⚓</span>
         </div>
       </div>
 
-      {/* Horizontal scroll — data-lenis-prevent stops smooth scroll from capturing wheel */}
-      <div
-        ref={scrollRef}
-        data-lenis-prevent
-        className="dishes-scroll pl-6 lg:pl-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]"
-      >
-        {SIGNATURE_DISHES.map((dish) => (
-          <article
-            key={dish.name}
-            data-dish-card
-            className="dish-card w-[320px] flex-shrink-0 lg:w-[380px]"
-          >
-            <div className="relative aspect-[4/3]">
-              <Image
-                src={dish.image}
-                alt={dish.name}
-                fill
-                sizes="(max-width: 1024px) 320px, 380px"
-                className="object-cover"
-              />
-              <span className="absolute right-3 top-3 z-10 rounded-full bg-brasa/20 px-3 py-1 text-xs font-medium text-brasa backdrop-blur-sm">
-                {dish.tag}
-              </span>
+      {/* Desktop: sticky image left + scrolling text right */}
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="lg:grid lg:grid-cols-2 lg:gap-16">
+          {/* Sticky image column — desktop only */}
+          <div className="hidden lg:block">
+            <div
+              ref={imageContainerRef}
+              className="sticky top-24 aspect-[4/5] overflow-hidden rounded-xl border border-border"
+            >
+              {SIGNATURE_DISHES.map((dish, i) => (
+                <div
+                  key={dish.name}
+                  data-dish-image
+                  className="absolute inset-0"
+                  style={{ zIndex: SIGNATURE_DISHES.length - i }}
+                >
+                  <Image
+                    src={dish.image}
+                    alt={dish.name}
+                    fill
+                    sizes="50vw"
+                    className="object-cover"
+                    priority={i === 0}
+                  />
+                  {/* Subtle bottom gradient for depth */}
+                  <div
+                    className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent"
+                    aria-hidden="true"
+                  />
+                </div>
+              ))}
+
+              {/* Counter — shows which dish */}
+              <div className="absolute bottom-5 left-5 z-20 flex items-center gap-2">
+                {SIGNATURE_DISHES.map((_, i) => (
+                  <div
+                    key={i}
+                    className="h-1 w-6 rounded-full bg-foreground/20"
+                    aria-hidden="true"
+                  />
+                ))}
+              </div>
             </div>
+          </div>
 
-            <div className="absolute inset-x-0 bottom-0 z-10 p-5">
-              <h3 className="font-display text-xl text-foreground">
-                {dish.name}
-              </h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-silver">
-                {dish.description}
-              </p>
-              <p className="mt-2 text-xs text-muted">
-                Serve {dish.serves}
-              </p>
-            </div>
-          </article>
-        ))}
+          {/* Scrolling panels — each dish */}
+          <div className="space-y-8 lg:space-y-0">
+            {SIGNATURE_DISHES.map((dish, i) => (
+              <article
+                key={dish.name}
+                data-dish-panel
+                className="group lg:flex lg:min-h-[50vh] lg:items-center"
+              >
+                {/* Mobile: inline image */}
+                <div className="mb-5 overflow-hidden rounded-xl border border-border lg:hidden">
+                  <div className="relative aspect-[16/9]">
+                    <Image
+                      src={dish.image}
+                      alt={dish.name}
+                      fill
+                      sizes="100vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div
+                      className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent"
+                      aria-hidden="true"
+                    />
+                    <span className="absolute right-3 top-3 z-10 rounded-full bg-brasa/20 px-3 py-1 text-xs font-medium text-brasa backdrop-blur-sm">
+                      {dish.tag}
+                    </span>
+                  </div>
+                </div>
 
-        <div className="w-6 flex-shrink-0 lg:w-12" aria-hidden="true" />
-      </div>
+                {/* Text content */}
+                <div className="w-full">
+                  {/* Number + tag */}
+                  <div className="mb-4 flex items-center gap-4">
+                    <span className="font-display text-5xl font-bold text-brasa/15 lg:text-6xl" aria-hidden="true">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="hidden rounded-full bg-brasa/10 px-3 py-1 text-xs font-medium text-brasa lg:inline-block">
+                      {dish.tag}
+                    </span>
+                  </div>
 
-      {/* Mobile scroll hint */}
-      <div className="mx-auto mt-6 max-w-7xl px-6 text-right sm:hidden">
-        <span className="text-xs tracking-wide text-muted">
-          Arraste para ver mais{" "}
-          <span className="scroll-hint-icon inline-block">&rarr;</span>
-        </span>
+                  <h3 className="font-display text-2xl text-foreground lg:text-3xl">
+                    {dish.name}
+                  </h3>
+
+                  <p className="mt-3 max-w-md text-base leading-relaxed text-silver">
+                    {dish.description}
+                  </p>
+
+                  <div className="mt-4 flex items-center gap-4">
+                    <span className="text-sm text-muted">
+                      Serve {dish.serves}
+                    </span>
+                    <span className="h-px w-8 bg-border" aria-hidden="true" />
+                  </div>
+
+                  {/* Divider between dishes on mobile */}
+                  {i < SIGNATURE_DISHES.length - 1 && (
+                    <div className="mt-8 h-px w-full bg-gradient-to-r from-transparent via-border to-transparent lg:hidden" aria-hidden="true" />
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

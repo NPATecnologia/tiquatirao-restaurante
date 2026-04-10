@@ -265,49 +265,8 @@ body::after {
 }
 
 /* ================================================================
-   SIGNATURE DISHES — horizontal scroll
+   (removed: horizontal scroll dishes — now uses scroll-triggered reveal)
    ================================================================ */
-
-.dishes-scroll {
-  display: flex;
-  gap: 1.5rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding-left: 1.5rem;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  padding-bottom: 1rem;
-}
-.dishes-scroll::-webkit-scrollbar {
-  display: none;
-}
-
-.dish-card {
-  scroll-snap-align: start;
-  flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
-  border-radius: 0.75rem;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface-elevated);
-  transition: border-color 0.4s ease, transform 0.4s ease;
-}
-.dish-card:hover {
-  border-color: rgba(232, 130, 42, 0.3);
-  transform: translateY(-4px);
-}
-.dish-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    var(--color-background) 0%,
-    rgba(12, 10, 8, 0.7) 40%,
-    transparent 100%
-  );
-  pointer-events: none;
-}
 
 /* ================================================================
    GALLERY LIGHTBOX
@@ -501,19 +460,6 @@ body::after {
 }
 .card-glow:hover::before {
   opacity: 1;
-}
-
-/* ================================================================
-   SCROLL HINT (horizontal scroll indicator)
-   ================================================================ */
-
-@keyframes scroll-hint {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(8px); }
-}
-
-.scroll-hint-icon {
-  animation: scroll-hint 2s ease-in-out infinite;
 }
 
 /* ================================================================
