@@ -209,7 +209,7 @@ export default function Hero() {
           {/* Headline */}
           <h1
             ref={headlineRef}
-            className="font-display text-[clamp(2.5rem,8vw,6rem)] font-bold leading-[0.95] tracking-tight"
+            className="font-display text-[clamp(2.5rem,8vw,6rem)] font-bold leading-[1.1] tracking-tight"
           >
             <span className="block text-foreground">O Litoral,</span>
             <span className="text-brasa-gradient block">Na Capital!</span>
