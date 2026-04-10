@@ -152,8 +152,8 @@ export default function Hero() {
       {/* Background image */}
       <div ref={imageRef} className="absolute inset-0">
         <Image
-          src="/assets/fachada-predio-barco-amarelo.jpg"
-          alt="Fachada do restaurante Tiquatirão Mar & Brasa com barco amarelo decorativo"
+          src="/assets/hero-tiquatirao.jpeg"
+          alt="Interior do restaurante Tiquatirão com paella de frutos do mar em primeiro plano e decoração náutica ao fundo"
           fill
           priority
           sizes="100vw"
