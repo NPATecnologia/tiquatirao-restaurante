@@ -5,6 +5,7 @@ import { WaveDivider } from "@/components/ui/WaveDivider";
 import Hero from "@/components/sections/Hero";
 import BrandMarquee from "@/components/sections/BrandMarquee";
 import { SignatureDishes } from "@/components/sections/SignatureDishes";
+import { Chef } from "@/components/sections/Chef";
 import { Menu } from "@/components/sections/Menu";
 import { About } from "@/components/sections/About";
 import { History } from "@/components/sections/History";
@@ -12,6 +13,7 @@ import { Gallery } from "@/components/sections/Gallery";
 import { VideoShowcase } from "@/components/sections/VideoShowcase";
 import Space from "@/components/sections/Space";
 import Numbers from "@/components/sections/Numbers";
+import Delivery from "@/components/sections/Delivery";
 import Reviews from "@/components/sections/Reviews";
 import { Press } from "@/components/sections/Press";
 import { FAQ } from "@/components/sections/FAQ";
@@ -29,6 +31,7 @@ export default function Home() {
 
         {/* 2. Desire — what we serve (show food before story) */}
         <SignatureDishes />
+        <Chef />
         <WaveDivider />
         <Menu />
 
@@ -45,6 +48,7 @@ export default function Home() {
 
         {/* 6. Social proof — trust signals */}
         <Numbers />
+        <Delivery />
         <Reviews />
         <Press />
 

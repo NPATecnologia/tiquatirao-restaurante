@@ -201,9 +201,9 @@ export default function Hero() {
           {/* Badge */}
           <span
             ref={badgeRef}
-            className="inline-flex items-center rounded-full border border-border-accent px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-brasa"
+            className="inline-flex items-center rounded-full border border-border-accent px-4 py-1.5 text-[10px] font-medium uppercase tracking-[0.2em] text-brasa sm:text-xs"
           >
-            Desde 1997
+            Super restaurante · Zona Leste · desde 1997
           </span>
 
           {/* Headline */}
@@ -220,8 +220,8 @@ export default function Hero() {
             ref={subtitleRef}
             className="max-w-xl font-sans text-lg leading-relaxed text-silver"
           >
-            Frutos do mar, carnes na brasa e a energia do litoral &mdash; há
-            mais de 27 anos na Penha de França.
+            Super restaurante de frutos do mar desde 1997. A família Mota serve
+            o litoral à mesa, no coração da Zona Leste.
           </p>
 
           {/* CTA Buttons */}

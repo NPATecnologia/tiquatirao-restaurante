@@ -20,7 +20,10 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tiquatirao.com.br"),
-  title: "Tiquatirão Mar & Brasa | O Litoral, na Capital!",
+  title: {
+    default: "Tiquatirão Mar & Brasa — 27 anos de frutos do mar em SP",
+    template: "%s | Tiquatirão Mar & Brasa",
+  },
   description:
     "Restaurante de frutos do mar em São Paulo desde 1997. Paella, caldeirada, camarão na moranga e muito mais. Penha de França, Zona Leste.",
   keywords: [

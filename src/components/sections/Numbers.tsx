@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap-setup";
+import { gsap, prefersReducedMotion } from "@/lib/gsap-setup";
 import { STATS } from "@/lib/constants";
 
 function parseStatValue(value: string): { target: number; suffix: string; decimals: number } {

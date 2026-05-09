@@ -70,6 +70,12 @@ export function Header() {
 
   const closeMobile = () => setMobileOpen(false);
 
+  const scrollToTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    closeMobile();
+  };
+
   return (
     <>
       <header
@@ -84,6 +90,7 @@ export function Header() {
           {/* Logo */}
           <a
             href="#inicio"
+            onClick={scrollToTop}
             aria-label={`${SITE.name} — voltar ao topo`}
             className="relative shrink-0"
           >
@@ -103,6 +110,7 @@ export function Header() {
               <li key={link.href}>
                 <a
                   href={link.href}
+                  onClick={link.href === "#inicio" ? scrollToTop : undefined}
                   className="nav-link text-sm font-medium tracking-wide text-foreground/80 transition-colors hover:text-foreground"
                 >
                   {link.label}
@@ -200,7 +208,7 @@ export function Header() {
               <a
                 key={link.href}
                 href={link.href}
-                onClick={closeMobile}
+                onClick={link.href === "#inicio" ? scrollToTop : closeMobile}
                 className="w-full rounded-lg py-4 text-center text-xl font-medium text-foreground/80 transition-colors hover:bg-surface-elevated hover:text-foreground"
                 style={{
                   animation: `drawer-fade-in 0.3s ease-out ${(i + 1) * 50}ms both`,

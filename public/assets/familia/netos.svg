@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320" role="img" aria-label="Netos da familia Mota - placeholder">
+  <defs>
+    <radialGradient id="bgN" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#1E1A15"/>
+      <stop offset="100%" stop-color="#0C0A08"/>
+    </radialGradient>
+    <linearGradient id="silhouetteN" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3A2E24"/>
+      <stop offset="100%" stop-color="#1F1812"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="320" fill="url(#bgN)"/>
+  <g opacity="0.5">
+    <circle cx="130" cy="148" r="28" fill="url(#silhouetteN)"/>
+    <circle cx="190" cy="148" r="28" fill="url(#silhouetteN)"/>
+    <path d="M 78 278 C 78 234, 100 210, 136 210 L 184 210 C 220 210, 242 234, 242 278 L 242 320 L 78 320 Z" fill="url(#silhouetteN)"/>
+  </g>
+  <text x="160" y="190" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="88" font-style="italic" font-weight="500" fill="#E8822A" opacity="0.88" letter-spacing="2">N</text>
+  <circle cx="160" cy="160" r="150" fill="none" stroke="#E8822A" stroke-width="0.5" opacity="0.15"/>
+</svg>

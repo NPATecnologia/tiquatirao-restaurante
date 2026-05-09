@@ -21,6 +21,10 @@ export const SITE = {
   mapsEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.5144435107345!2d-46.53934602400041!3d-23.51399257883244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce5fb5366bea1b%3A0x1f7ea0dd88009e77!2sRestaurante%20Tiquatir%C3%A3o%20Mar%20%26%20Brasa!5e0!3m2!1spt-BR!2sbr!4v1775767864595!5m2!1spt-BR!2sbr",
 } as const;
 
+export const WHATSAPP_EVENTOS_URL = `https://wa.me/${SITE.phoneClean}?text=${encodeURIComponent(
+  "Olá! Gostaria de orçamento para evento privado no piso superior do Tiquatirão."
+)}`;
+
 export const PAYMENT_METHODS = [
   { label: "Pix", icon: "pix", note: null },
   { label: "Dinheiro", icon: "cash", note: null },
@@ -35,6 +39,7 @@ export const NAV_LINKS = [
   { label: "Cardápio", href: "#cardapio" },
   { label: "Galeria", href: "#galeria" },
   { label: "Espaço", href: "#espaco" },
+  { label: "Delivery", href: "#delivery" },
   { label: "Avaliações", href: "#avaliacoes" },
   { label: "Contato", href: "#contato" },
 ] as const;
@@ -67,7 +72,7 @@ export const MENU_CATEGORIES = [
     items: [
       "Massa com Frutos do Mar",
       "Peixes Assados",
-      "Bacalhau Premium",
+      "Bacalhau à Portuguesa",
       "Polvo à Lagareiro",
     ],
   },
@@ -76,13 +81,14 @@ export const MENU_CATEGORIES = [
     icon: "flame",
     items: [
       "Carnes na Brasa",
-      "Picanha Premium",
+      "Picanha na Brasa",
       "Costela ao Forno",
       "Frango Grelhado",
     ],
   },
 ] as const;
 
+// Fonte: site oficial e dados públicos — validar trimestralmente
 export const STATS = [
   { value: "27+", label: "Anos de tradição" },
   { value: "4.8", label: "Nota no iFood" },
@@ -147,9 +153,9 @@ export const SIGNATURE_DISHES = [
     tag: "Para Compartilhar",
   },
   {
-    name: "Picanha Premium",
+    name: "Picanha na Brasa",
     description:
-      "Corte nobre grelhado no ponto, acompanhado de arroz, farofa e vinagrete.",
+      "Picanha grelhada no ponto, acompanhada de arroz, farofa e vinagrete. Tradição da casa na brasa.",
     image: "/assets/picanha-signature.jpg",
     serves: "2 pessoas",
     tag: "Mar & Brasa",
@@ -171,6 +177,22 @@ export const SIGNATURE_DISHES = [
     tag: "Clássico",
   },
   {
+    name: "Tilápia à Fiorentina",
+    description:
+      "Filé grelhado com molho branco, espinafre e atum — receita assinatura do Chef Marco Falcão desde os primeiros anos da casa. Acompanha arroz à Tasmânia e batata noisette.",
+    image: "/assets/tilapia-fiorentina.jpg", // TODO(cliente): enviar foto do prato
+    serves: "1–2 pessoas",
+    tag: "Do Chef",
+  },
+  {
+    name: "Tainha na Brasa",
+    description:
+      "Tainha inteira grelhada na brasa, servida com arroz grego, pirão de peixe e fritas. Peixe do litoral preparado como manda a tradição da família.",
+    image: "/assets/tainha-na-brasa.jpg", // TODO(cliente): enviar foto do prato
+    serves: "2 pessoas",
+    tag: "Mar & Brasa",
+  },
+  {
     name: "Paella Individual",
     description:
       "A mesma receita da Paella Valenciana em porção individual. Perfeita com uma cerveja gelada.",
@@ -180,6 +202,38 @@ export const SIGNATURE_DISHES = [
   },
 ] as const;
 
+export const GENERATIONS = [
+  {
+    generation: "1ª geração",
+    name: "Sr. José da Mota",
+    role: "Fundou o Tiquatirão em 1997. Trouxe o mar de Portugal pra Penha.",
+    image: "/assets/familia/jose-mota.svg",
+    alt: "Sr. José da Mota, fundador do Tiquatirão em 1997",
+  },
+  {
+    generation: "2ª geração",
+    name: "Kelly e Johnny Mota",
+    role: "Tocam a casa desde os anos 2000. Mantêm a família unida à mesa — a nossa e a dos outros.",
+    image: "/assets/familia/kelly-johnny.svg",
+    alt: "Kelly e Johnny Mota, segunda geração à frente do Tiquatirão",
+  },
+  {
+    generation: "3ª geração",
+    name: "Os netos",
+    role: "Ainda em formação. Já aprendem que prato bom começa no fogo e termina na conversa.",
+    image: "/assets/familia/netos.svg",
+    alt: "Netos da família Mota, terceira geração em formação",
+  },
+] as const;
+
+export const CHEF = {
+  eyebrow: "Na cozinha desde 1997",
+  name: "Chef Marco Falcão",
+  role: "Entrou com o Sr. José e nunca mais saiu. Criou a paella que virou ícone. Cozinha que vira memória.",
+  image: "/assets/familia/chef-marco-falcao.svg",
+  alt: "Chef Marco Falcão, na cozinha do Tiquatirão desde 1997",
+} as const;
+
 export const HISTORY_EVENTS = [
   {
     year: 1997,
@@ -188,10 +242,22 @@ export const HISTORY_EVENTS = [
       "Sr. José da Mota, com seus filhos Kelly e Johnny e o Chef Marco Falcão, abre as portas do Tiquatirão na Penha de França. O objetivo: trazer os sabores do litoral para a Zona Leste de São Paulo.",
   },
   {
+    year: 1999,
+    title: "Paella de Domingo",
+    description:
+      "A paella valenciana gigante vira prato-estrela da casa. Aos domingos, a fila começa antes do almoço — tradição que não saiu mais do cardápio.",
+  },
+  {
     year: 2001,
     title: "Primeira Expansão",
     description:
       "Com o restaurante lotando aos fins de semana, o Tiquatirão ganha o piso superior exclusivo para eventos e confraternizações.",
+  },
+  {
+    year: 2003,
+    title: "Música ao Vivo",
+    description:
+      "Os domingos ganham trilha sonora ao vivo. Casal de músicos atende pedidos da mesa — tradição que segue firme até hoje.",
   },
   {
     year: 2005,
@@ -244,9 +310,10 @@ export const PRESS_MENTIONS = [
     year: 2021,
     url: "https://www.osmelhoresdagastronomia.com.br/2021/10/21/tiquatirao-frutos-do-mar/",
   },
+  // TODO: validar com cliente se o prêmio Travelers' Choice 2024 foi efetivamente recebido. Se sim, restaurar título original.
   {
     outlet: "TripAdvisor",
-    title: "Travelers' Choice — Restaurante premiado",
+    title: "Restaurante reconhecido pela comunidade de viajantes",
     year: 2024,
     url: SITE.tripadvisor,
   },

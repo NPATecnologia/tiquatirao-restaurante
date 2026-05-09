@@ -1,7 +1,8 @@
 import { SITE, NAV_LINKS } from "@/lib/constants";
 import Image from "next/image";
+import { SOCIAL_ICON_MAP, type SocialIconName } from "@/components/ui/SocialIcons";
 
-const SOCIAL_LINKS = [
+const SOCIAL_LINKS: ReadonlyArray<{ label: SocialIconName; href: string }> = [
   { label: "Instagram", href: SITE.instagram },
   { label: "Facebook", href: SITE.facebook },
   { label: "TikTok", href: SITE.tiktok },
@@ -9,7 +10,7 @@ const SOCIAL_LINKS = [
   { label: "LinkedIn", href: SITE.linkedin },
   { label: "TripAdvisor", href: SITE.tripadvisor },
   { label: "iFood", href: SITE.ifood },
-] as const;
+];
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -18,9 +19,9 @@ export function Footer() {
     <footer className="bg-surface" role="contentinfo">
       {/* Main grid */}
       <div className="mx-auto max-w-7xl px-6 pb-12 pt-16">
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-12">
           {/* Col 1 — Brand */}
-          <div className="sm:col-span-2 lg:col-span-1">
+          <div className="sm:col-span-2 lg:col-span-5">
             <Image
               src="/brand/logo.jpg"
               alt={SITE.name}
@@ -39,7 +40,7 @@ export function Footer() {
           </div>
 
           {/* Col 2 — Navigation */}
-          <div>
+          <div className="lg:col-span-2">
             <h3 className="mb-5 text-xs font-semibold uppercase tracking-widest text-foreground/60">
               Navegação
             </h3>
@@ -58,7 +59,7 @@ export function Footer() {
           </div>
 
           {/* Col 3 — Contact */}
-          <div>
+          <div className="lg:col-span-3">
             <h3 className="mb-5 text-xs font-semibold uppercase tracking-widest text-foreground/60">
               Contato
             </h3>
@@ -93,23 +94,27 @@ export function Footer() {
           </div>
 
           {/* Col 4 — Social */}
-          <div>
+          <div className="lg:col-span-2">
             <h3 className="mb-5 text-xs font-semibold uppercase tracking-widest text-foreground/60">
               Redes Sociais
             </h3>
-            <ul className="space-y-3">
-              {SOCIAL_LINKS.map((social) => (
-                <li key={social.label}>
-                  <a
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-muted transition-colors hover:text-brasa"
-                  >
-                    {social.label}
-                  </a>
-                </li>
-              ))}
+            <ul className="flex flex-wrap gap-1.5">
+              {SOCIAL_LINKS.map((social) => {
+                const Icon = SOCIAL_ICON_MAP[social.label];
+                return (
+                  <li key={social.label}>
+                    <a
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Tiquatirão no ${social.label}`}
+                      className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full p-2.5 text-muted transition-colors hover:text-brasa focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brasa/60"
+                    >
+                      <Icon className="h-5 w-5" />
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
@@ -123,9 +128,14 @@ export function Footer() {
           </p>
           <p>
             Desenvolvido por{" "}
-            <span className="font-medium text-foreground/60">
+            <a
+              href="https://npatecnologia.com.br"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-foreground/60 hover:text-foreground hover:underline transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brasa/60 rounded-sm"
+            >
               NPA Tecnologia
-            </span>
+            </a>
           </p>
         </div>
       </div>

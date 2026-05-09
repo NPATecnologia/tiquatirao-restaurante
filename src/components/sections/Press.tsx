@@ -91,7 +91,7 @@ export function Press() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-5 sm:grid-cols-2">
           {PRESS_MENTIONS.map((mention) => (
             <a
               key={`${mention.outlet}-${mention.year}`}

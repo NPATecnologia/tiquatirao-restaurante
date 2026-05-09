@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320" role="img" aria-label="Kelly e Johnny Mota - placeholder">
+  <defs>
+    <radialGradient id="bgK" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#1E1A15"/>
+      <stop offset="100%" stop-color="#0C0A08"/>
+    </radialGradient>
+    <linearGradient id="silhouetteK" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3A2E24"/>
+      <stop offset="100%" stop-color="#1F1812"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="320" fill="url(#bgK)"/>
+  <g opacity="0.5">
+    <circle cx="120" cy="132" r="36" fill="url(#silhouetteK)"/>
+    <circle cx="200" cy="132" r="36" fill="url(#silhouetteK)"/>
+    <path d="M 58 268 C 58 218, 86 190, 128 190 L 192 190 C 234 190, 262 218, 262 268 L 262 320 L 58 320 Z" fill="url(#silhouetteK)"/>
+  </g>
+  <text x="160" y="182" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="72" font-style="italic" font-weight="500" fill="#E8822A" opacity="0.88" letter-spacing="1">K+J</text>
+  <circle cx="160" cy="160" r="150" fill="none" stroke="#E8822A" stroke-width="0.5" opacity="0.15"/>
+</svg>
